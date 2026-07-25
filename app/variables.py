@@ -56,16 +56,23 @@ class UserConfig:
         required: bool = False,
         default: str = "",
     ) -> str:
-        """Helper method to get and validate environment variables."""
-        value = os.environ.get(key, default)
-        if required and value is None:
-            logger.error(f"{key} must be set")
-            sys.exit(1)
-        try:
-            return value
-        except ValueError:
-            logger.error(f"Invalid value for {key}: {value}")
-            sys.exit(1)
+        """
+        Get an environment variable with validation.
+
+        Required variables must exist and cannot be empty.
+        Optional variables return the provided default.
+        """
+
+        value = os.environ.get(key)
+
+        if value is None or value.strip() == "":
+            if required:
+                logger.error(f"Required environment variable '{key}' is missing or empty.")
+                sys.exit(1)
+
+            return default
+
+        return value.strip()
 
 
 USER_CONFIG = UserConfig()
