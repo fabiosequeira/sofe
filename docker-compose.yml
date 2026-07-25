@@ -1,0 +1,16 @@
+services:
+  sofe:
+    image: ghcr.io/fabiosequeira/sofe:<version> # pin to a release tag (latest will be the one for most people), see https://github.com/fabiosequeira/sofe/releases
+    ports:
+      - "7979:7979"
+    environment:
+      SONARR_URL: "https://sonarr.local"
+      SONARR_API_KEY: "<your_api_key>"
+      SONARR_SERIES_ID: "187"
+      AFL_ANIME_NAME: "one-piece"
+      CREATE_PLEX_COLLECTION: "False" # required; set to "True" only if you use Plex (see optional vars below)
+      MONITOR_NON_FILLER_SONARR_EPISODES: "True"
+      # --- Optional: only needed if CREATE_PLEX_COLLECTION is "True" ---
+      # PLEX_URL: "http://127.0.0.1:32400"
+      # PLEX_TOKEN: "<your_plex_token>"
+      # PLEX_ANIME_LIBRARY: "<your_plex_anime_library>"
